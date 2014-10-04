@@ -109,6 +109,6 @@ def call_functions(filename, output_file):
     geo_state_shp = create_shp_list('admin_1_states_provinces_lakes_shp')
     create_map(geo_state_shp, output_file)
     
-call_functions('golf_coordinates.txt', 'golf_text')
+call_functions('<add your file name>.txt', '<add your output name>')
 
 
