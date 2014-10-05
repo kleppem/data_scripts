@@ -14,8 +14,8 @@ from matplotlib.lines import Line2D
 
 Entrez.email = 'kleppem@mskcc.org'
 
-# count number of publications for keywords
 def count_occurence(keyword):
+""" count number of publications for keywords """
     handle = Entrez.egquery(term=keyword)
     record = Entrez.read(handle)
     for row in record["eGQueryResult"]:
@@ -23,8 +23,9 @@ def count_occurence(keyword):
             count = (row["Count"])
             return count
 
-#collect medline records
+
 def pubmed_id(keyword, count):
+""" collect medline records """
     handle_pubmed = Entrez.esearch(db="pubmed",
                                    term=keyword,
                                    retmax=count)
@@ -36,8 +37,9 @@ def pubmed_id(keyword, count):
     records = list(Medline.parse(handle))
     return records
 
-#extract year
+
 def get_date(res):
+""" extract year """
     date = []
     for rec in res:
         d = rec.get('EDAT')
@@ -45,23 +47,23 @@ def get_date(res):
         date.append(y)
     return date
 
-#extract pmid
 def get_pmid(res):
+""" extract PubMed ID"""
    pmid = []
    for rec in res:
         pmid.append(rec['PMID'])
    return pmid
 
-#extract journal title
 def get_journal(res):
+""" extract journal titel """
     JT = []
     for rec in res:
         d = rec.get('JT')
         JT.append(d)
     return JT
 
-#extract publication type
 def get_type(res):
+""" extract publication type """
     PT = []
     for rec in res:
         d = rec.get('PT')
@@ -74,8 +76,8 @@ def remove_brackets(article_type):
         article_type_new.append(','.join(str(item) for item in a))
     return article_type_new
 
-#extract affilitation
 def get_aff(res):
+""" extract author affiliations """
     AF = []
     for rec in res:
         d = rec.get('AD')
@@ -100,9 +102,6 @@ def get_country(AF):
         c.append(cset.intersection(cs))
     return c
 
-#Alternative: comprehension for affs list
-#[a.replace(".", " ").strip().split(" ") for a in affs if a != None]
-
 def remove_set(country):
     country_new = []
     for c in country:
@@ -126,8 +125,8 @@ def get_pubmed(res):
     zip_file = zip(year,pmid,journal, article_type_new, country_new)
     return zip_file
 
-###--------------------call your functions
 def get_records(keyword):
+""" call all functions """
     count = count_occurence(keyword)
     res = pubmed_id(keyword, count)
     rec = get_pubmed(res)
@@ -135,6 +134,7 @@ def get_records(keyword):
     return res, rec, df_data
 
 res, rec, df_data = get_records(keyword)
+
 
 ###--------------------analyze and visualize data stored in the dataframe
 ### Example 1:
@@ -183,7 +183,7 @@ def export_file(dict_country):
     json.dump(dict_country, output)
     output.close()
 
-def call_functions(df_data)
+def call_functions(df_data):
 	dict_country = create_dict(df_data_country)
 	export_file(dict_country)
 
