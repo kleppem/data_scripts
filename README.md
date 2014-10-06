@@ -27,7 +27,6 @@ Twitterstream.py
 --> follow tweets live!
 
 Twitter_data_processing.py
-
 --> what you can do with your twitter data
 
 map_coordinates_to_USstates.py 	
