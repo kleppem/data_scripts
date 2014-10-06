@@ -14,13 +14,13 @@ Pubmed_Medline_search.py
 --> search PubMed. All you need is a query term!
 
 World_heatmap_PubMed.py
---> Create a world map illustrating the origin of publications
+--> create a world map illustrating the origin of publications
 
 Twitter_search_POST.py 	
 --> use Twitter API to query tweets
 
 Twitter_coordinates_country_map.py 	
--->
+--> create a world map illustrating the origin of tweets
 
 Twitterstream_no_storage.py 
 Twitterstream.py 	
