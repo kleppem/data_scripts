@@ -18,22 +18,24 @@ os.chdir('<set your working directory>')
 
 #http://blog.jverkamp.com/2012/10/25/determining-country-by-latitudelongitude/
 
-#import data of interest (containing coordinates)
 def open_file(filename):
+    """ importing coordinates """
 	coordinates = []
 	f = open(filename, 'rU')
 	coordinates = json.load(f)
 	f.close()
 	return coordinates
 
-#retrieve information for USA located coordinates
+
 def FIPS_lookup(USA):
+    """ retrieve information for USA located coordinates """
     data = []
     county = []
     state = []
     codes = []
     for row in USA:
-        data.append(json.load(urllib2.urlopen('http://data.fcc.gov/api/block/find?format=json&latitude=%s&longitude=%s&showall=true' % (row[0], row[1]))))
+        data.append(json.load(urllib2.urlopen('http://data.fcc.gov/api/block/find?format=json&latitude=%s&longitude=%s&showall=true'
+            % (row[0], row[1]))))
     for row in data:
         county.append(row['County']['FIPS'])
         state.append(str(row['State']['name']))
@@ -64,9 +66,7 @@ def define_max(unique_counts):
 	maxi = str(max(unique_counts))
 	return maxi
 
-### create shp_list
 def create_shp_list(shapename_state):
-    #shapename_state = 'admin_1_states_provinces_lakes_shp'
     states_shp = shpreader.natural_earth(resolution='110m',category='cultural', name=shapename_state)
     states_shp_list = []
     geo_state_list = []
@@ -79,8 +79,7 @@ def create_shp_list(shapename_state):
     geo_state_shp = zip(states_shp_list, geo_state)
     return geo_state_shp
     
-## blot the data
-def create_map(FIPS,output_file):
+def create_map(geo_state_shp,output_file):
     cmap = mpl.cm.Purples
     shapename_state = 'admin_1_states_provinces_lakes_shp'
     states_shp = shpreader.natural_earth(resolution='110m',category='cultural', name=shapename_state)
@@ -99,7 +98,6 @@ def create_map(FIPS,output_file):
     plt.draw()
     plt.savefig(output_file)
 
-### call plot function
 def call_functions(filename, output_file):
     coordinates = open_file(filename)
     FIPS = FIPS_lookup(coordinates)
