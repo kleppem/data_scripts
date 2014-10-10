@@ -9,7 +9,7 @@ mg = mygene.MyGeneInfo()
 #set directory to location of your input file (here: Genes.csv)
 
 #open file
-def read_file(filename)
+def read_file(filename):
 	myfile = open(filename, 'r')
 	string=myfile.read()
 	string_lower = string.lower()
@@ -49,13 +49,11 @@ def write_to_file(res):
     	f.write((str(i) + "\n"))
 	f.close()
 
-##### call functions
-genes = read_file('Genes.csv')
-annotation = get_accessions(genes)
-res = print_data(annotation)
-write_to_file(res)
+def call_functions(filename):
+	genes = read_file(filename)
+	annotation = get_accessions(genes)
+	res = print_data(annotation)
+	write_to_file(res)
 
 
-#call function
-if __name__ == '__main__':
-  x+y
+call_functions(<add your filename>)

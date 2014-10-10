@@ -25,7 +25,6 @@ def import_pops(infile, outfile):
             mydict = {rows[0]:rows[1] for rows in reader}
     return mydict
 
-
 def create_pop_list(my_dict):
     pop_list = []
     values = mydict.values()
@@ -76,9 +75,9 @@ def remove_US_territories(USstate):
         if entry != 'Guam':
             if entry != 'Puerto Rico':
                 if entry != 'American Samoa':
-                    my_list.append(entry)
+                    if entry != 'United States Virgin Islands':
+                        my_list.append(entry)
     return my_list
-
 
 def count_USstate(USstate):
     from collections import Counter
@@ -94,14 +93,23 @@ def count_USstate(USstate):
     return unique_states, unique_counts
 
 
+def create_pops(unique_states, mydict):
+    pops = []
+    for row in unique_states:
+        if row in mydict.keys():
+            pops.append(float(mydict[row]))
+    return pops
+
+
 # calculate numbers of tweets per citizen in a given state
-def tweet_per_capita(unique_counts, pop_list):
+def tweet_per_capita(unique_counts, pops):
     freq = []
-    count_pop_list = zip(unique_counts, pop_list)
+    count_pop_list = zip(unique_counts, pops)
     for row in count_pop_list:
         freq.append(float(row[0]/row[1]))
     maxi = str(max(freq))
     return freq, maxi
+
 
 ### create shp_list
 def create_shp_list(shapename_state):
@@ -142,13 +150,13 @@ def create_map(geo_state_shp,output_file):
 ### call plot function
 def call_functions(filename, output_file):
     mydict = import_pops('USpop.csv', 'USpop_new.csv')
-    pop_list = create_pop_list(my_dict)
     coordinates = open_file(filename)
     FIPS = FIPS_lookup(coordinates)
     USstate = remove_none(FIPS)
     my_list = remove_US_territories(USstate)
     unique_states, unique_counts = count_USstate(my_list)
-    freq, maxi = tweet_per_capita(unique_counts, pop_list)
+    pops = create_pops(unique_states, mydict)
+    freq, maxi = tweet_per_capita(unique_counts, pops)
     geo_state_shp = create_shp_list('admin_1_states_provinces_lakes_shp')
     create_map(geo_state_shp, output_file)
     
