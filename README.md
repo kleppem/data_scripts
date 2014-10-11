@@ -4,6 +4,9 @@ data_scripts
 This folder contains my collection of Python scripts.
 
  		
+Crime_SF.py
+--> Leada challenge Visualize Crime SF
+
 Get_gene_accessions.py 
 --> get gene accessions for your gene symbols
 
