@@ -8,7 +8,7 @@ import json
 from scipy.misc import imread
 import matplotlib.cbook as cbook
 
-os.chdir('/Users/kleppem/Documents/Python/Crime_SF_project')
+os.chdir('<set working directory>')
 
 def import_coordinates(x_file,y_file):
 	y = []
@@ -29,7 +29,7 @@ def crime_map(x,y, outfile, title):
     fig = plt.figure(figsize=(10,5))
     m = Basemap(llcrnrlon=-122.5365,llcrnrlat=37.7081,urcrnrlon=-122.3274,urcrnrlat=37.8101,
                 projection='merc',resolution='h')
-    im = plt.imread('Background2.tif')
+    im = plt.imread('<your background file')
     m.imshow(im, interpolation='lanczos', origin='upper')
     m.drawmapboundary(fill_color='white')
     x1,y1=m(x,y)
@@ -41,3 +41,5 @@ def crime_map(x,y, outfile, title):
 def call_functions(x_file, y_file, outfile, title):
 	x, y = import_coordinates(x_file, y_file)
 	crime_map(x,y, outfile, title)
+
+""" for matching background images use OSM; the above example is set up for San Francisco"""
