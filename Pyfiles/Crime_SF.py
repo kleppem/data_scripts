@@ -20,10 +20,9 @@ def create_main_df(filename):
     my_df = pd.DataFrame(my_csv, columns = ['ata', 'Category','Descript', 'DayOfWeek', 'Date', 'Time', 'PdDistrict', 'Resolution', 'Address', 'X','Y', 'Location'])
     return my_df, my_csv
 
-def crimes_by_time(my_df):
+def crimes_by_type(my_df):
 """ create plot showing crimes per time"""
-    idf = my_df.set_index(['PdDistrict'])
-    idf.Category.value_counts().plot(kind='bar', title= ' # crimes per type')
+    my_df.Category.value_counts().plot(kind='bar', title= ' # crimes per type')
     ylabel('Number of crimes')
     xlabel('District')
     plt.xticks(rotation=90)
@@ -31,8 +30,7 @@ def crimes_by_time(my_df):
 
 def create_by_day(my_df):
 #Plot crimes per day
-    idf = my_df.set_index(['PdDistrict'])
-    idf.DayOfWeek.value_counts().plot(kind='bar', title= ' # crimes per day of week')
+    my_df.DayOfWeek.value_counts().plot(kind='bar', title= ' # crimes per day of week')
     ylabel('Number of crimes')
     xlabel('District')
     plt.xticks(rotation=90)
@@ -114,28 +112,8 @@ def create_car_theft(my_df):
     ylabel('Number of crimes: VEHICLE THEFT')
     xlabel('District')
 
-#numbers of VEHICLE THEFTS per district
-def create_crime_type_per_district(my_df, crime, crime_name, plot_title):
-	""" function to depict the number of a specific crime type for each district"""
-    crime = my_df[my_df.Category == crime_name]
-    crime.PdDistrict.value_counts().plot(kind='bar', title= plot_title)
-    ylabel('Number of crimes:' +crime_name)
-    xlabel('District')
-    return crime
-
-def combine_crime_types_per_district(crime1, crime2, crime3, crime4, label1, label2, label3, label4, ttl):
-	""" plot different crime types per district"""
-    crime1.PdDistrict.value_counts().plot(label = label1, title = ttl)
-    crime2.PdDistrict.value_counts().plot(label= label2)
-    crime3.PdDistrict.value_counts().plot(label = label3)
-    crime4.PdDistrict.value_counts().plot(label = label4)
-    ylabel('Number of crimes')
-    xlabel('District')
-    plt.xticks(rotation=90)
-    plt.legend(prop={'size':12})
-
 def create_district_data(my_df):
-	""" other option to plot crime_types per distirct"""
+	""" plot crime_types per distirct """
     richmond = my_df[my_df.PdDistrict == 'RICHMOND']
     park = my_df[my_df.PdDistrict == 'PARK']
     southern = my_df[my_df.PdDistrict == 'SOUTHERN']
@@ -186,10 +164,6 @@ def call_bin_times(filename):
 	create_time_nobins(count_t, time)
 	temp_list = add_time_range(count_times)
 	create_by_time_bins(temp_list)
-
-def call_function_crimes_by_district(filename, crime, crime_name, plot_title):
-	my_df, my_csv = create_main_df(filename)
-	create_crime_type_per_district(my_df, crime, crime_name, plot_title)
 	
 def call_function_to_create_plot_all_crimes(filename):
 	my_df, my_csv = create_main_df(filename)
