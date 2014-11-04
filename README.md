@@ -36,3 +36,11 @@ map_coordinates_to_USstates.py
 map_coordinates_to_USstates_pop.py 	
 --> localize your coordinates on a map
 
+Heatmap_with_clustering.py
+--> Hierachical Clustering, Heatmaps, and Gridspec
+(based on http://nbviewer.ipython.org/github/ucsd-scientific-python/user-group/blob/master/presentations/20131016/hierarchical_clustering_heatmaps_gridspec.ipynb)
+
+Single_cell.py
+--> processing of single cell cytokine data
+
+
